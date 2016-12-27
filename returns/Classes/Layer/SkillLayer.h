@@ -17,6 +17,9 @@ class SkillLayer: public LayerDisplay
 public:
     SkillLayer();
     ~SkillLayer();
+    
+    virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) override;
+    
     CREATE_FUNC(SkillLayer);
     
     CC_SYNTHESIZE(int, _dir, Dir);//Function action
@@ -26,7 +29,7 @@ public:
     static SkillLayer* getInstance();
 private:
     bool init() override;
-    void onClickItem(Ref* ref);
+    void onClickItem(std::string key);
 
 };
 #endif /* defined(__gamebase__SkillLayer__) */

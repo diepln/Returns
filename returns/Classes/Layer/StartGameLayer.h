@@ -17,10 +17,15 @@ class StartGameLayer: public LayerDisplay
 public:
     StartGameLayer();
     ~StartGameLayer();
+    
+    virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) override;
+    
     CREATE_FUNC(StartGameLayer);
     
     CC_SYNTHESIZE(int, _dir, Dir);//Function action
 //    static SkillLayer* create();
+    
+    void touchEvent(cocos2d::Touch* touch, cocos2d::Vec2 _p);
     
     void updateFun();
     static StartGameLayer* getInstance();

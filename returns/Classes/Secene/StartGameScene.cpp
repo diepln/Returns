@@ -8,12 +8,11 @@
 
 #include "StartGameScene.h"
 #include "Constants.h"
-#include <cocos-widget.h>
 #include "VisibleRect.h"
 #include "StartGameLayer.h"
 
 USING_NS_CC;
-USING_NS_CC_WIDGET;
+
 
 StartGameScene* StartGameScene::_instance = NULL;
 

@@ -13,7 +13,7 @@
 #include "Constants.h"
 
 USING_NS_CC;
-USING_NS_CC_WIDGET;
+
 using namespace std;
 
 static SkillLayer *_functionAction = 0;
@@ -27,6 +27,7 @@ SkillLayer* SkillLayer::getInstance()
 SkillLayer::SkillLayer()
 {
     _functionAction = this;
+
 }
 SkillLayer::~SkillLayer()
 {
@@ -35,99 +36,121 @@ SkillLayer::~SkillLayer()
 bool SkillLayer::init()
 {
     
-    this->addChild(m_pWindow);
-    CLabel* lbleft = CLabel::create();
+    Label* lbleft = Label::create();
     lbleft->setString(StringUtils::format("Left  %d",TileMap::getInstance()->getTotalLeft()));
     lbleft->setName("left");
     lbleft->setSystemFontSize(35);
     lbleft->setPosition(VisibleRect::rightBottom() + Vec2(-80, 20));
-    lbleft->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbleft);
+    this->addChild(lbleft);
     
-    CLabel* lbright = CLabel::create();
+    Label* lbright = Label::create();
     lbright->setString(StringUtils::format("Right  %d",TileMap::getInstance()->getTotalRight()));
     lbright->setName("right");
     lbright->setSystemFontSize(35);
     lbright->setPosition(VisibleRect::rightBottom() + Vec2(-80, 100));
-    lbright->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbright);
+    this->addChild(lbright);
     
-    CLabel* lbtop = CLabel::create();
+    Label* lbtop = Label::create();
     lbtop->setString(StringUtils::format("Top  %d",TileMap::getInstance()->getTotalTop()));
     lbtop->setName("top");
     lbtop->setSystemFontSize(35);
     lbtop->setPosition(VisibleRect::rightBottom() + Vec2(-80, 200));
-    lbtop->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbtop);
+    this->addChild(lbtop);
     
-    CLabel* lbbot = CLabel::create();
+    Label* lbbot = Label::create();
     lbbot->setString(StringUtils::format("Bot  %d",TileMap::getInstance()->getTotalBot()));
     lbbot->setName("bot");
     lbbot->setSystemFontSize(35);
     lbbot->setPosition(VisibleRect::rightBottom() + Vec2(-80, 300));
-    lbbot->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbbot);
+    this->addChild(lbbot);
     
-    CLabel* lbSprings = CLabel::create();
+    Label* lbSprings = Label::create();
     lbSprings->setString(StringUtils::format("Springs  %d",TileMap::getInstance()->getTotalSprings()));
     lbSprings->setName("springs");
     lbSprings->setSystemFontSize(35);
     lbSprings->setPosition(VisibleRect::rightBottom() + Vec2(-80, 380));
-    lbSprings->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbSprings);
+    this->addChild(lbSprings);
     
-    CLabel* lbstart = CLabel::create();
+    Label* lbstart = Label::create();
     lbstart->setString("start");
     lbstart->setName("start");
     lbstart->setSystemFontSize(35);
     lbstart->setPosition(VisibleRect::rightBottom() + Vec2(-80, 460));
-    lbstart->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbstart);
+    this->addChild(lbstart);
     
-    CLabel* lbremove = CLabel::create();
+    Label* lbremove = Label::create();
     lbremove->setString("remove");
     lbremove->setName("remove");
     lbremove->setSystemFontSize(35);
     lbremove->setPosition(VisibleRect::rightBottom() + Vec2(-80, 540));
-    lbremove->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbremove);
+    this->addChild(lbremove);
     
-    CLabel* lbformatkey = CLabel::create();
+    Label* lbformatkey = Label::create();
     lbformatkey->setString(StringUtils::format("F_K %d - %d ",TileMap::getInstance()->getTotalStar(), TileMap::getInstance()->getTotalKey()));
     lbformatkey->setName("formatkey");
     lbformatkey->setSystemFontSize(35);
     lbformatkey->setPosition(VisibleRect::rightBottom() + Vec2(-80, 600));
-    lbformatkey->setOnTouchBeganListener(this, ccw_touchbegan_selector(SkillLayer::onClickItem));
-    m_pWindow->addChild(lbformatkey);
+    this->addChild(lbformatkey);
+    
+    // Enable touches
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener,this);
+    return true;
+}
+
+bool SkillLayer::onTouchBegan (cocos2d::Touch *touch, cocos2d::Event *event)
+{
+    auto st =  event->getCurrentTarget()->getName();
+    
+    if(this->getChildByName("left")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("left");
+        onClickItem("left");
+    }else if(this->getChildByName("right")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("right");
+        onClickItem("right");
+    }else if(this->getChildByName("top")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("top");
+        onClickItem("top");
+    }else if(this->getChildByName("bot")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("bot");
+        onClickItem("bot");
+    }else if(this->getChildByName("springs")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("springs");
+        onClickItem("springs");
+    }else if(this->getChildByName("remove")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("remove");
+        onClickItem("remove");
+    }else if(this->getChildByName("start")->getBoundingBox().containsPoint(touch->getLocation())){
+        log("start");
+        onClickItem("start");
+    }
     
     return true;
 }
 
 void SkillLayer::updateFun(){
-    CLabel* lbleft = (CLabel*)m_pWindow->getChildByName("left");
+    Label* lbleft = (Label*)this->getChildByName("left");
     lbleft->setString(StringUtils::format("Left  %d",TileMap::getInstance()->getTotalLeft()));
     
-    CLabel* lbright = (CLabel*)m_pWindow->getChildByName("right");
+    Label* lbright = (Label*)this->getChildByName("right");
     lbright->setString(StringUtils::format("Right  %d",TileMap::getInstance()->getTotalRight()));
     
-    CLabel* lbtop = (CLabel*)m_pWindow->getChildByName("top");
+    Label* lbtop = (Label*)this->getChildByName("top");
     lbtop->setString(StringUtils::format("Top  %d",TileMap::getInstance()->getTotalTop()));
 
-    CLabel* lbbot = (CLabel*)m_pWindow->getChildByName("bot");
+    Label* lbbot = (Label*)this->getChildByName("bot");
     lbbot->setString(StringUtils::format("Bot  %d",TileMap::getInstance()->getTotalBot()));
     
-    CLabel* lbsprings = (CLabel*)m_pWindow->getChildByName("springs");
+    Label* lbsprings = (Label*)this->getChildByName("springs");
     lbsprings->setString(StringUtils::format("Springs  %d",TileMap::getInstance()->getTotalSprings()));
     
-    CLabel* lbformatkey = (CLabel*)m_pWindow->getChildByName("formatkey");
+    Label* lbformatkey = (Label*)this->getChildByName("formatkey");
     lbformatkey->setString(StringUtils::format("F_K %d - %d ",TileMap::getInstance()->getTotalStar() - TileMap::getInstance()->getCurrenStar(), TileMap::getInstance()->getTotalKey() - TileMap::getInstance()->getCurrenKey()));
     
 }
 
-void SkillLayer::onClickItem(Ref* ref){
-    
-    CLabel*lb = (CLabel*)ref;
-    auto st = lb->getName();
+void SkillLayer::onClickItem(std::string key){
+
+    auto st = key;
     _dir = -1;
     if(st == "left" && TileMap::getInstance()->getTotalLeft() > 0){
         _dir = IDTILE::TILE_LEFT;

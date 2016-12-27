@@ -14,7 +14,6 @@
 #include "GameSingleton.h"
 
 USING_NS_CC;
-USING_NS_CC_WIDGET;
 
 MainGameScene* MainGameScene::_instance = NULL;
 
@@ -75,7 +74,6 @@ bool MainGameScene::init()
 
 void MainGameScene::createBackground(){
     
-    CImageView *image = CImageView::create("Maps/bg_level1.jpg");
     Sprite *sp = Sprite::create("Maps/bg_level1.jpg");
     sp->setPosition(WIN_SIZE.width *0.5, WIN_SIZE.height * 0.5);
     this->addChild(sp,-1);

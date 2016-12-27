@@ -14,7 +14,6 @@
 #include "GameSingleton.h"
 
 USING_NS_CC;
-USING_NS_CC_WIDGET;
 using namespace std;
 
 static GameWinLayer *_functionAction = 0;
@@ -36,22 +35,17 @@ GameWinLayer::~GameWinLayer()
 bool GameWinLayer::init()
 {
     
-    this->addChild(m_pWindow);
-    CLabel* lbReplay = CLabel::create();
+    Label* lbReplay = Label::create();
     lbReplay->setString("Replay");
     lbReplay->setName("replay");
     lbReplay->setSystemFontSize(35);
     lbReplay->setPosition(VisibleRect::center() + Vec2(-100, 0));
-    lbReplay->setOnTouchBeganListener(this, ccw_touchbegan_selector(GameWinLayer::onClickItem));
-    m_pWindow->addChild(lbReplay);
-    
-    CLabel* lbNext = CLabel::create();
+    Label* lbNext = Label::create();
     lbNext->setString("Next Game");
     lbNext->setName("next");
     lbNext->setSystemFontSize(35);
     lbNext->setPosition(VisibleRect::center() + Vec2(100, 0));
-    lbNext->setOnTouchBeganListener(this, ccw_touchbegan_selector(GameWinLayer::onClickItem));
-    m_pWindow->addChild(lbNext);
+
     
     
     return true;
@@ -59,7 +53,7 @@ bool GameWinLayer::init()
 
 void GameWinLayer::onClickItem(Ref* ref){
     
-    CLabel*lb = (CLabel*)ref;
+    Label*lb = (Label*)ref;
     auto st = lb->getName();
     
     if(st == "replay"){//Start game

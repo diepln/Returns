@@ -9,7 +9,6 @@
 #ifndef __gamebase__LayerDisplay__
 #define __gamebase__LayerDisplay__
 
-#include <cocos-widget.h>
 #include "cocos2d.h"
 
 typedef enum
@@ -26,9 +25,17 @@ public:
     LayerDisplay();
     ~LayerDisplay();
     
-    CREATE_FUNC(LayerDisplay);
+    cocos2d::EventListenerTouchOneByOne* touchListener;
     
-    cocos2d::cocoswidget::CWidgetWindow* m_pWindow;
+    virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+    virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+    
+//    void touchEvent(cocos2d::Touch*, std::string keyName);
+    
+    CREATE_FUNC(LayerDisplay);
+
     
     void setShow(bool show = true, int flag = EF_LAYER::NONE);
     void setPos(cocos2d::Vec2 pos, int flag = EF_LAYER::NONE);
